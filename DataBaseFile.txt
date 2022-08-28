@@ -1,0 +1,7 @@
+Igor,director,5000,36
+John,director,1250,45
+Joy,assistant,750,23
+Mark,engineer,1050,42
+Karl,engineer,1025,38
+Elza,accountant,950,32
+Valera,slesari,580,55
