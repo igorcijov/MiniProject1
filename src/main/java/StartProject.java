@@ -1,10 +1,16 @@
+import java.util.List;
 import java.util.Scanner;
+
+/**
+ * Java Pro. MiniProject #1
+ * @author Igor Cijov
+ * @version 08 sept. 2022
+ */
 
 public class StartProject {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Database database = new Database();
-        database.init();
+        Database database = new Database(InitDb.getInitData());
 
 
         boolean exit = false;
@@ -14,9 +20,9 @@ public class StartProject {
 
         while (!exit) {
             System.out.println("PLEASE SELECT");
-            System.out.println("c = create new employe"+ "\n" + "r = read database"+ "\n"+ "u = update employe"+ "\n"+
-                    "d = delete employe"+ "\n" +"f = find employe"+ "\n"+ "p = show position"+ "\n"+ "s = save data"+
-                    "\n"+ "x = exit");
+            System.out.println("c = create new employe" + "\n" + "r = read database" + "\n" + "u = update employe" + "\n" +
+                    "d = delete employe" + "\n" + "f = find employe" + "\n" + "p = show position" + "\n" + "s = save data" +
+                    "\n" + "x = exit");
             System.out.print("db> ");
 
             String command = scanner.next();
@@ -29,7 +35,8 @@ public class StartProject {
                     database.create(Employee.scanEmployee());
                     break;
                 case "r":
-                    System.out.println(database.read());
+                    List<Employee> employees = database.read();
+                    employees.forEach(System.out::println);
                     break;
                 case "u":
                     System.out.println("update> Enter the name: ");
@@ -45,7 +52,8 @@ public class StartProject {
                 case "f":
                     System.out.println("find> Enter the name: ");
                     name = scanner.next();
-                    System.out.println(database.find(name));
+                    Employee employee = database.find(name);
+                    System.out.println(employee != null ? employee + "\n" : "Not found");
                     break;
                 case "p":
                     System.out.println("position> Enter position: ");

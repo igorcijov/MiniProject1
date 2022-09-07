@@ -4,17 +4,16 @@ import java.util.stream.Collectors;
 public class Database {
     List<Employee> employees = new ArrayList<>();
     Map<String, Employee> employeeMap = new HashMap<>();
-    Map<String, Employee> sortedMap = new TreeMap<>();
     Set<String> position = new HashSet<>();
+    private boolean testMode = false;
 
-    public void init() {
-        employees.addAll(InitDb.getInitData());
+    public Database(Collection<Employee> employees){
+        this.employees.addAll(employees);
+        this.employees.forEach(e-> employeeMap.put(e.getName(),e));
+    }
 
-        for (Employee employee : employees) {
-            employeeMap.put(employee.getName(), employee);
-            sortedMap.put(employee.getName(), employee);
-            position.add(employee.getPosition());
-        }
+    public List<Employee> read() {
+        return employees;
     }
 
     public List<Employee> getEmployees() {
@@ -28,18 +27,12 @@ public class Database {
 
     }
 
-    public String read() {
-        StringBuffer sb = new StringBuffer();
-        for (Employee employee : employeeMap.values()) {
-            sb.append("" + employee + "\n");
+    public boolean update(String name, Employee employee) {
+        if(delete(name)){
+            create(employee);
+            return true;
         }
-
-        return sb.toString();
-    }
-
-    public void update(String name, Employee employee) {
-        delete(name);
-        create(employee);
+        return false;
     }
 
     public boolean delete(String name) {
@@ -47,16 +40,13 @@ public class Database {
         if (employee != null) {
             employeeMap.remove(employee.getName());
             employees.remove(employee);
+            return true;
         }
         return false;
     }
 
-    public String find(String name) {
-        Employee employee = employeeMap.get(name);
-        if (employee != null) {
-            return "" + employee + "\n";
-        }
-        return "Not found";
+    public Employee find(String name) {
+       return employeeMap.get(name);
     }
 
     public void showPosition(String position) {
@@ -64,5 +54,9 @@ public class Database {
                 .filter(p -> p.getPosition().equals(position))
                 .collect(Collectors.toList());
         printPosition.forEach(System.out::println);
+    }
+
+    public void setTestMode() {
+        testMode=true;
     }
 }

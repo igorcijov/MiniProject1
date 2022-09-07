@@ -21,13 +21,15 @@ public class Employee implements Comparable<Employee> {
         return name;
     }
 
-    public int getSalary() {return salary;}
+    public int getSalary() {
+        return salary;
+    }
 
     public Integer getAge() {
         return age;
     }
 
-    public static Employee scanEmployee(){
+    public static Employee scanEmployee() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the Name: ");
         String name = scanner.next();
@@ -37,7 +39,7 @@ public class Employee implements Comparable<Employee> {
         int salary = scanner.nextInt();
         System.out.println("Enter age: ");
         int age = scanner.nextInt();
-        return new Employee(name, position,salary,age);
+        return new Employee(name, position, salary, age);
     }
 
     @Override
